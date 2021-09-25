@@ -2,7 +2,6 @@ package proxy
 
 import (
 	"context"
-	"crypto/subtle"
 	"net/http"
 
 	"github.com/k8spin/prometheus-multi-tenant-proxy/internal/pkg"
