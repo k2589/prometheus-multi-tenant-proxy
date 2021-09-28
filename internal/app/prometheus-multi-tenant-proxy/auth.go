@@ -3,7 +3,6 @@ package proxy
 import (
 	"context"
 	"net/http"
-
 	"github.com/k8spin/prometheus-multi-tenant-proxy/internal/pkg"
 )
 
@@ -19,7 +18,7 @@ const (
 func BasicAuth(handler http.HandlerFunc, authConfig *pkg.Authn) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		user, pass, ok := r.BasicAuth()
-		authorized, namespace := isAuthorized(user, pass, authConfig)
+		authorized, namespace := isAuthorized(user, pass)
 		if !ok || !authorized {
 			writeUnauthorisedResponse(w)
 			return
@@ -29,7 +28,7 @@ func BasicAuth(handler http.HandlerFunc, authConfig *pkg.Authn) http.HandlerFunc
 	}
 }
 
-func isAuthorized(user string, pass string, authConfig *pkg.Authn) (bool, string) {
+func isAuthorized(user string, pass string) (bool, string) {
 // 	for _, v := range authConfig.Users {
 // 		if subtle.ConstantTimeCompare([]byte(user), []byte(v.Username)) == 1 && subtle.ConstantTimeCompare([]byte(pass), []byte(v.Password)) == 1 {
 // 			return true, v.Namespace
